@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import UsersTable from './UsersTable'
-import { Icon, Accordion, Header, Segment, Progress, Message } from 'semantic-ui-react'
+import { Icon, Header, Segment, Progress, Label, Button } from 'semantic-ui-react'
 
-
-
-export default function feature({
+export default function Feature({
     name,
     licenses_issued,
     licenses_in_use,
     users,
-    message
+    message,
+    selectFeature
   }) {
 
+  // TODO: All the features are re-rendered when a feature is selected
+
   return (
-    <div>
-      <Header as='h2' attached='top'>
+    <Segment onClick={() => selectFeature(name)}>
+      <Header as='h6'>
         {name}
-        <Progress value={licenses_in_use} total={licenses_issued} color='blue' progress />
       </Header>
-      <Segment attached>
-        {message
-          ? <Message
-              warning
-              header='Server message'
-              content={message}/>
-          : null
-        }
-        <UsersTable usersData={users}/>
-      </Segment>
-    </div>
+
+      <Label basic size="large">
+        {licenses_in_use}/{licenses_issued}
+      </Label>
+
+      <Progress
+        total={licenses_issued}
+        value={licenses_in_use}
+        color='blue' 
+        size='tiny'
+      />      
+    </Segment>
   );
 }
