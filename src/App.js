@@ -56,6 +56,10 @@ function App() {
 
   const handleFilterChange = (e, selection) => setFilterList(selection.value)
 
+  const handleSelectFeature = (featureName) => setCurrentFeature(product?.features.find(f => f.name === featureName))
+
+  const isHiddenFeature = (name) => !(filterList.includes(name) || filterList.length === 0)
+
   return (
       <Grid padded>
         <Grid.Column
@@ -112,7 +116,7 @@ function App() {
                 // If the div is not there, the "hidden" property does not work
                 // Having this div removes the space between features
                 <div>
-                  <Grid.Column key={key} mobile={8} tablet={4} computer={9} style={{minWidth: '200pt'}} hidden={!filterList.includes(feature.name)}>
+                  <Grid.Column key={key} mobile={8} tablet={4} computer={9} style={{minWidth: '200pt'}} hidden={isHiddenFeature(feature.name)}>
                     <Feature
                       name = {feature.name}
                       // TODO: Change this "|| 0"
@@ -120,7 +124,7 @@ function App() {
                       licenses_in_use = {feature.licenses_in_use || 0}
                       users = {feature.users}
                       message = {feature.message}
-                      selectFeature = {setCurrentFeature}
+                      selectFeature = {handleSelectFeature}
                     />
                   </Grid.Column>
                 </div>
@@ -132,10 +136,11 @@ function App() {
 
             <Grid.Row>
               <Header dividing size="huge" as="h2">
-                Users of {currentFeature}
+                Users of {currentFeature?.name}
               </Header>
               <UsersTable 
-                userList = {product?.features.find(f => f.name === currentFeature)?.users}
+                //userList = {product?.features.find(f => f.name === currentFeature)?.users}
+                userList = {currentFeature?.users}
               />
             </Grid.Row>
 
