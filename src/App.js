@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Grid, Header, Dropdown, Segment, Container, Table, Menu, Button, Divider, Image, Label, Input, Icon } from 'semantic-ui-react'
+import { Grid, Header, Dropdown, Message, Segment, Container, Table, Menu, Button, Divider, Image, Label, Input, Icon } from 'semantic-ui-react'
 
 import logo from './logo.svg';
 import './App.css';
@@ -23,7 +23,6 @@ function App() {
       )
     }
   }, [product]);
-  console.log(filterOptions)
 
   let prodcutList = [
     {
@@ -43,6 +42,7 @@ function App() {
     }
   ]
 
+  // TODO: Improve this (await)
   function fetchProduct(productName) {
     fetch('http://localhost:5000/product/' + productName)
     .then(res => res.json())
@@ -81,9 +81,6 @@ function App() {
         
           <Grid padded>
             <Grid.Row>
-              <Header as='h1'>
-                {product?.name}
-              </Header>
               <Menu>
                 <Dropdown 
                   placeholder='Select Product'
@@ -99,13 +96,15 @@ function App() {
                   multiple
                   options={filterOptions}
                   noResultsMessage={null}
-                  //allowAdditions
-                  //value={test}
-                  //onAddItem={()=> {}}
                   onChange={handleFilterChange}
                 />
               </Menu>
+            </Grid.Row>
 
+            <Grid.Row>
+              <Header as='h1'>
+                {product?.name}
+              </Header>
             </Grid.Row>
 
             <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
@@ -133,19 +132,32 @@ function App() {
             </Grid.Row>
 
             <Divider section hidden />
+            
+            { // Header
+              typeof currentFeature !== 'undefined' &&
+                <Grid.Row>
+                  <Header dividing size="huge" as="h2">
+                    Users of {currentFeature?.name}
+                  </Header>
+                </Grid.Row>
+            }
+
+            { // Message
+              typeof currentFeature !== 'undefined' &&
+                <Grid.Row>
+                  <Message
+                    warning
+                    hidden={typeof currentFeature?.message === 'undefined'}
+                    header='Feature message'
+                    content={currentFeature?.message}
+                  />
+                </Grid.Row> 
+            }
 
             <Grid.Row>
-              <Header dividing size="huge" as="h2">
-                Users of {currentFeature?.name}
-              </Header>
               <UsersTable 
-                //userList = {product?.features.find(f => f.name === currentFeature)?.users}
                 userList = {currentFeature?.users}
               />
-            </Grid.Row>
-
-            <Grid.Row>
-              
             </Grid.Row>
 
           </Grid>

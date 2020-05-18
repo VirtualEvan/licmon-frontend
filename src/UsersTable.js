@@ -90,7 +90,7 @@ function MultiLicenseRow({
 export default function UsersTable({userList = []}) {
 
   if (userList.length === 0) {
-    return null;
+    return null
   }
 
   // Check if multiple licenses are granted for this feature
