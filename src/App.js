@@ -11,7 +11,7 @@ function App() {
   const [product, setProduct] = useState(null)
   const [currentFeature, setCurrentFeature] = useState()
   const [filterList, setFilterList] = useState([])
-  const [filterOptions, setFilterOptions] = useState()
+  const [filterOptions, setFilterOptions] = useState([])
 
   useEffect(() => {
     if (product !== null){
