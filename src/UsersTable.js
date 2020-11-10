@@ -1,43 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Table } from 'semantic-ui-react'
+import React, {useState, useEffect} from 'react';
+import {Table} from 'semantic-ui-react';
 
-function SingleLicenseRow({
-    username,
-    hostname,
-    display,
-    version,
-    server,
-    port,
-    handle,
-    checkout
-  }) {
-
+function SingleLicenseRow({username, hostname, display, version, server, port, handle, checkout}) {
   return (
     <Table.Row>
-      <Table.Cell>
-        {username}
-      </Table.Cell>
-      <Table.Cell>
-        {hostname}
-      </Table.Cell>
-      <Table.Cell>
-        {display}
-      </Table.Cell>
-      <Table.Cell>
-        {version}
-      </Table.Cell>
-      <Table.Cell>
-        {server}
-      </Table.Cell>
-      <Table.Cell>
-        {port}
-      </Table.Cell>
-      <Table.Cell>
-        {handle}
-      </Table.Cell>
-      <Table.Cell>
-        {checkout}
-      </Table.Cell>
+      <Table.Cell>{username}</Table.Cell>
+      <Table.Cell>{hostname}</Table.Cell>
+      <Table.Cell>{display}</Table.Cell>
+      <Table.Cell>{version}</Table.Cell>
+      <Table.Cell>{server}</Table.Cell>
+      <Table.Cell>{port}</Table.Cell>
+      <Table.Cell>{handle}</Table.Cell>
+      <Table.Cell>{checkout}</Table.Cell>
     </Table.Row>
   );
 }
@@ -51,50 +25,30 @@ function MultiLicenseRow({
   port,
   handle,
   checkout,
-  num_licenses
+  num_licenses,
 }) {
-
   return (
     <Table.Row>
-      <Table.Cell>
-        {username}
-      </Table.Cell>
-      <Table.Cell>
-        {hostname}
-      </Table.Cell>
-      <Table.Cell>
-        {display}
-      </Table.Cell>
-      <Table.Cell>
-        {version}
-      </Table.Cell>
-      <Table.Cell>
-        {server}
-      </Table.Cell>
-      <Table.Cell>
-        {port}
-      </Table.Cell>
-      <Table.Cell>
-        {handle}
-      </Table.Cell>
-      <Table.Cell>
-        {checkout}
-      </Table.Cell>
-      <Table.Cell>
-        {num_licenses}
-      </Table.Cell>
+      <Table.Cell>{username}</Table.Cell>
+      <Table.Cell>{hostname}</Table.Cell>
+      <Table.Cell>{display}</Table.Cell>
+      <Table.Cell>{version}</Table.Cell>
+      <Table.Cell>{server}</Table.Cell>
+      <Table.Cell>{port}</Table.Cell>
+      <Table.Cell>{handle}</Table.Cell>
+      <Table.Cell>{checkout}</Table.Cell>
+      <Table.Cell>{num_licenses}</Table.Cell>
     </Table.Row>
   );
 }
 
 export default function UsersTable({userList = []}) {
-
   if (userList.length === 0) {
-    return null
+    return null;
   }
 
   // Check if multiple licenses are granted for this feature
-  const isMultiLicense = 'num_licenses' in userList[0]
+  const isMultiLicense = 'num_licenses' in userList[0];
 
   return (
     <Table striped>
@@ -108,7 +62,7 @@ export default function UsersTable({userList = []}) {
           <Table.HeaderCell>Port</Table.HeaderCell>
           <Table.HeaderCell>Handle</Table.HeaderCell>
           <Table.HeaderCell>Checkout</Table.HeaderCell>
-          {isMultiLicense && (<Table.HeaderCell>Num. licenses</Table.HeaderCell>)}
+          {isMultiLicense && <Table.HeaderCell>Num. licenses</Table.HeaderCell>}
         </Table.Row>
       </Table.Header>
 
@@ -140,8 +94,7 @@ export default function UsersTable({userList = []}) {
                 handle={user.handle}
                 checkout={user.checkout}
               />
-            ))
-        }
+            ))}
       </Table.Body>
     </Table>
   );

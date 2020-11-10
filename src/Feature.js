@@ -1,25 +1,20 @@
-import React, { useState, useEffect,useCallback } from 'react';
-import UsersTable from './UsersTable'
-import { Image, Card, Icon, Header, Segment, Progress, Label, Button } from 'semantic-ui-react'
+import React, {useState, useEffect, useCallback} from 'react';
+import UsersTable from './UsersTable';
+import {Image, Card, Icon, Header, Segment, Progress, Label, Button} from 'semantic-ui-react';
 
 export default function Feature({
-    name,
-    licenses_issued,
-    licenses_in_use,
-    users,
-    message,
-    selectFeature
-  }) {
-
+  name,
+  licenses_issued,
+  licenses_in_use,
+  users,
+  message,
+  selectFeature,
+}) {
   // TODO: All the features are re-rendered when a feature is selected
 
   return (
     <Card link onClick={() => selectFeature(name)}>
-      {
-      message 
-        ? <Label color='yellow' corner='right' icon='warning'/>
-        : null
-      }
+      {message ? <Label color="yellow" corner="right" icon="warning" /> : null}
       <Card.Content>
         <Card.Header>
           {/* TODO: The name should be cut if it is to long */}
@@ -34,15 +29,14 @@ export default function Feature({
           <Progress
             total={licenses_issued}
             value={licenses_in_use}
-            color='blue' 
-            size='tiny'
+            color="blue"
+            size="tiny"
             style={{barMinWidth: '0'}}
-          /> 
+          />
         </Card.Description>
-        
       </Card.Content>
     </Card>
-  )
+  );
 
   /*return (
     <Segment onClick={() => selectFeature(name)}>
