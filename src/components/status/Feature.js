@@ -1,12 +1,10 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import UsersTable from './UsersTable';
-import {Image, Card, Icon, Header, Segment, Progress, Label, Button} from 'semantic-ui-react';
+import React from 'react';
+import {Card, Progress, Label} from 'semantic-ui-react';
 
 export default function Feature({
   name,
   licenses_issued,
   licenses_in_use,
-  users,
   message,
   selectFeature,
 }) {

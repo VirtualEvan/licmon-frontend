@@ -1,26 +1,17 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Grid,
   Header,
   Dropdown,
   Message,
-  Segment,
-  Container,
-  Table,
   Menu,
-  Button,
   Divider,
-  Image,
-  Label,
-  Input,
-  Icon,
 } from 'semantic-ui-react';
 
-import logo from './logo.svg';
 import './App.css';
-import Feature from './Feature';
 import NavigationMenu from './NavigationMenu';
-import UsersTable from './UsersTable';
+import Feature from './status/Feature';
+import UsersTable from './status/UsersTable';
 
 function App() {
   const [product, setProduct] = useState(null);

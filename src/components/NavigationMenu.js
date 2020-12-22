@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Menu, Divider} from 'semantic-ui-react';
+import React from 'react';
+import {Menu} from 'semantic-ui-react';
 
 export default function NavigationMenu() {
   return (
