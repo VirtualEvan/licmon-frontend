@@ -18,7 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write 'src/**/*.{js,jsx,scss,css,json,md}'",
-    "prettier:check": "prettier --check 'src/**/*.{js,jsx,scss,css,json,md}'"
+    "prettier:check": "prettier --check 'src/**/*.{js,jsx,scss,css,json,md}'",
+    "eslint": "npx eslint --fix --max-warnings 0 src/**/*",
+    "eslint:check": "npx eslint --max-warnings 0 src/**/*"
   },
   "eslintConfig": {
     "extends": [
@@ -41,7 +43,7 @@
   "devDependencies": {
     "husky": "^4.3.0",
     "lint-staged": "^10.5.1",
-    "prettier": "^2.1.2"
+    "prettier": "^2.2.1"
   },
   "husky": {
     "hooks": {
@@ -49,6 +51,11 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,scss,css,json,md}": "prettier --write"
+    "src/**/*.{scss,css,json,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx}": [
+      "npx eslint --fix --max-warnings 0 --"
+    ]
   }
 }
