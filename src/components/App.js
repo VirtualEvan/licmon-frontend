@@ -5,6 +5,8 @@ import {Grid} from 'semantic-ui-react';
 import './App.css';
 import NavigationMenu from './NavigationMenu';
 import StatusPage from './status/StatusPage';
+import ServicePage from './service/ServicePage';
+import UsersPage from './users/UsersPage';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Grid.Column mobile={16} tablet={13} computer={13} floated="right" id="content">
           <Switch>
             <Route exact path="/" component={StatusPage} />
+            <Route exact path="/service" component={ServicePage} />
+            <Route exact path="/users" component={UsersPage} />
           </Switch>
         </Grid.Column>
       </Grid>
