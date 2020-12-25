@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import {
   Grid,
   Header,
@@ -16,6 +17,7 @@ export default function StatusPage() {
   const [currentFeature, setCurrentFeature] = useState();
   const [filterList, setFilterList] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
+  const selectedFeature = useSelector(state => state.feature.selectedFeature);
 
   useEffect(() => {
     if (product !== null) {
@@ -29,6 +31,16 @@ export default function StatusPage() {
       );
     }
   }, [product]);
+
+  useEffect(() => {
+    if (selectedFeature === undefined)
+      console.log('It is undefined')
+    else {
+      console.log(selectedFeature)
+      setCurrentFeature(product?.features.find(f => f.name === selectedFeature));
+    }
+  }, [selectedFeature, product]);
+  
 
   let prodcutList = [
     {
@@ -62,12 +74,17 @@ export default function StatusPage() {
 
   const handleFilterChange = (e, selection) => setFilterList(selection.value);
 
-  const handleSelectFeature = featureName =>
-    setCurrentFeature(product?.features.find(f => f.name === featureName));
+  // TODO: remove after changing the behavior to use the store
+  //const handleSelectFeature = featureName =>
+  //  setCurrentFeature(product?.features.find(f => f.name === featureName));
 
   const isFilteredFeature = name => filterList.includes(name) || filterList.length === 0;
 
   return (
+    // TODO: Dropdown issue (Seems to be related to semantic-ui)
+    // Warning: findDOMNode is deprecated in StrictMode. findDOMNode was passed an instance of RefFindNode
+    // which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn
+    // more about using refs safely here:
     <Grid padded>
       <Grid.Row>
         <Menu>
@@ -116,7 +133,7 @@ export default function StatusPage() {
                     licenses_in_use={feature.licenses_in_use || 0}
                     users={feature.users}
                     message={feature.message}
-                    selectFeature={handleSelectFeature}
+                    //selectFeature={handleSelectFeature}
                   />
                 </Grid.Column>
               )

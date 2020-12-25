@@ -1,17 +1,20 @@
 import React from 'react';
+import {useDispatch} from 'react-redux'
 import {Card, Progress, Label} from 'semantic-ui-react';
+import {selectFeature} from '../../actions/feature';
 
 export default function Feature({
   name,
   licenses_issued,
   licenses_in_use,
   message,
-  selectFeature,
 }) {
+  const dispatch = useDispatch();
+
   // TODO: All the features are re-rendered when a feature is selected
 
   return (
-    <Card link onClick={() => selectFeature(name)}>
+    <Card link onClick={() => dispatch(selectFeature(name))}>
       {message ? <Label color="yellow" corner="right" icon="warning" /> : null}
       <Card.Content>
         <Card.Header>
