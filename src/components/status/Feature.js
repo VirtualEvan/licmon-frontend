@@ -6,15 +6,12 @@ export default function Feature({
   licenses_issued,
   licenses_in_use,
   message,
-  featureSelectionHandler
+  featureSelectionHandler,
 }) {
   // TODO: All the features are re-rendered when a feature is selected
   return (
     <Card link onClick={() => featureSelectionHandler(name)}>
-      {
-        message && 
-        <Label color="yellow" corner="right" icon="warning" />
-      }
+      {message && <Label color="yellow" corner="right" icon="warning" />}
       <Card.Content>
         <Card.Header>
           {/* TODO: The name should be cut if it is to long */}

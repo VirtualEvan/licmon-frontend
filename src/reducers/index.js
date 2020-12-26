@@ -1,7 +1,7 @@
-import {combineReducers} from 'redux'
+import {combineReducers} from 'redux';
 
-import status from './status'
+import status from './status';
 
 export default combineReducers({
-  status
-})
+  status,
+});

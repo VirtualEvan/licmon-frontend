@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Grid,
-  Header,
-  Dropdown,
-  Message,
-  Menu,
-  Divider,
-} from 'semantic-ui-react';
+import {Grid, Header, Dropdown, Message, Menu, Divider} from 'semantic-ui-react';
 
 import FeatureList from './FeatureList';
 import UsersTable from './UsersTable';
@@ -19,14 +12,14 @@ export default function StatusPage() {
 
   useEffect(() => {
     product &&
-    // TODO: the features array is being iterated twice (here and in the return)
-    setFilterOptions(
-      product.features.map((feature, key) => ({
-        key: key,
-        text: feature.name,
-        value: feature.name,
-      }))
-    );
+      // TODO: the features array is being iterated twice (here and in the return)
+      setFilterOptions(
+        product.features.map((feature, key) => ({
+          key: key,
+          text: feature.name,
+          value: feature.name,
+        }))
+      );
   }, [product]);
 
   let prodcutList = [
@@ -60,10 +53,12 @@ export default function StatusPage() {
   const handleProductSelection = (e, {value}) => fetchProduct(value);
 
   // TODO: Avoid re-rendering all the features by suing memoized stuff
-  const handleFeatureSelection = (featureName) => setSelectedFeature(product.features.find(f => f.name === featureName));
+  const handleFeatureSelection = featureName =>
+    setSelectedFeature(product.features.find(f => f.name === featureName));
 
   // TODO: Use references instead of creating a new array
-  const handleFilterChange = (e, {value}) => setFilter(product.features.filter(f => value.includes(f.name)));
+  const handleFilterChange = (e, {value}) =>
+    setFilter(product.features.filter(f => value.includes(f.name)));
 
   return (
     // TODO: Dropdown issue (Seems to be related to semantic-ui)
@@ -95,47 +90,48 @@ export default function StatusPage() {
       {
         // TODO: Create a component to render this??
         // so it can be checked if product is null in the new component
-        product &&
-        <>
-          <Grid.Row>
-            <Header as="h1">{product.name}</Header>
-          </Grid.Row>
+        product && (
+          <>
+            <Grid.Row>
+              <Header as="h1">{product.name}</Header>
+            </Grid.Row>
 
-          <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
-            <FeatureList
-              features={filter.length > 0 ? filter : product.features}
-              featureSelectionHandler={handleFeatureSelection}
-            />
-          </Grid.Row>
-        
-          <Divider section />
+            <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
+              <FeatureList
+                features={filter.length > 0 ? filter : product.features}
+                featureSelectionHandler={handleFeatureSelection}
+              />
+            </Grid.Row>
 
-          {
-            // Header
-            selectedFeature !== undefined && (
-              <>
-                <Grid.Row>
-                  <Header dividing size="huge" as="h2">
-                    Users of {selectedFeature.name}
-                  </Header>
-                </Grid.Row>
+            <Divider section />
 
-                <Grid.Row>
-                  <Message
-                    warning
-                    hidden={selectedFeature.message === undefined}
-                    header="Feature message"
-                    content={selectedFeature.message}
-                  />
-                </Grid.Row>
+            {
+              // Header
+              selectedFeature !== undefined && (
+                <>
+                  <Grid.Row>
+                    <Header dividing size="huge" as="h2">
+                      Users of {selectedFeature.name}
+                    </Header>
+                  </Grid.Row>
 
-                <Grid.Row>
-                  <UsersTable userList={selectedFeature.users} />
-                </Grid.Row>
-              </>
-            )
-          }
-        </>
+                  <Grid.Row>
+                    <Message
+                      warning
+                      hidden={selectedFeature.message === undefined}
+                      header="Feature message"
+                      content={selectedFeature.message}
+                    />
+                  </Grid.Row>
+
+                  <Grid.Row>
+                    <UsersTable userList={selectedFeature.users} />
+                  </Grid.Row>
+                </>
+              )
+            }
+          </>
+        )
       }
     </Grid>
   );
