@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
-import feature from './feature'
+import status from './status'
 
 export default combineReducers({
-  feature
+  status
 })

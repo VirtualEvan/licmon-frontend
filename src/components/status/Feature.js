@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux'
 import {Card, Progress, Label} from 'semantic-ui-react';
-import {selectFeature} from '../../actions/feature';
+import {selectFeature} from '../../actions/status';
 
 export default function Feature({
   name,

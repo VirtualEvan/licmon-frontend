@@ -9,27 +9,26 @@ import {
   Divider,
 } from 'semantic-ui-react';
 
-import Feature from './Feature';
+import FeatureList from './FeatureList';
 import UsersTable from './UsersTable';
-
+// TODO: Remove all interrogations
 export default function StatusPage() {
-  const [product, setProduct] = useState(null);
-  const [currentFeature, setCurrentFeature] = useState();
-  const [filterList, setFilterList] = useState([]);
+  const [product, setProduct] = useState();
+  const [filter, setFilter] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
-  const selectedFeature = useSelector(state => state.feature.selectedFeature);
+  const [currentFeature, setCurrentFeature] = useState();
+  const selectedFeature = useSelector(state => state.status.selectedFeature);
 
   useEffect(() => {
-    if (product !== null) {
-      // TODO: the features array is being iterated twice (here and in the return)
-      setFilterOptions(
-        product.features.map((feature, key) => ({
-          key: key,
-          text: feature.name,
-          value: feature.name,
-        }))
-      );
-    }
+    product &&
+    // TODO: the features array is being iterated twice (here and in the return)
+    setFilterOptions(
+      product.features.map((feature, key) => ({
+        key: key,
+        text: feature.name,
+        value: feature.name,
+      }))
+    );
   }, [product]);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function StatusPage() {
       console.log('It is undefined')
     else {
       console.log(selectedFeature)
-      setCurrentFeature(product?.features.find(f => f.name === selectedFeature));
+      product && setCurrentFeature(product.features.find(f => f.name === selectedFeature));
     }
   }, [selectedFeature, product]);
   
@@ -70,15 +69,14 @@ export default function StatusPage() {
       .catch(console.log);
   }
 
-  const handleProductSelection = (event, data) => fetchProduct(data.value);
+  const handleProductSelection = (e, {value}) => fetchProduct(value);
 
-  const handleFilterChange = (e, selection) => setFilterList(selection.value);
-
+  // TODO: Use references instead of creating a new array
+  const handleFilterChange = (e, {value}) => setFilter(product.features.filter(f => value.includes(f.name)));
+  
   // TODO: remove after changing the behavior to use the store
   //const handleSelectFeature = featureName =>
   //  setCurrentFeature(product?.features.find(f => f.name === featureName));
-
-  const isFilteredFeature = name => filterList.includes(name) || filterList.length === 0;
 
   return (
     // TODO: Dropdown issue (Seems to be related to semantic-ui)
@@ -107,70 +105,48 @@ export default function StatusPage() {
         </Menu>
       </Grid.Row>
 
-      <Grid.Row>
-        <Header as="h1">{product?.name}</Header>
-      </Grid.Row>
+      {
+        // TODO: Create a component to render this??
+        // so it can be checked if product is null in the new component
+        product &&
+        <>
+          <Grid.Row>
+            <Header as="h1">{product.name}</Header>
+          </Grid.Row>
 
-      <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
-        {
-          // TODO: Check cardgroups
-          product?.features.map(
-            (feature, key) =>
-              // TODO: Check if it is better (more performant) to filter adding a "hidden" property
-              // The hidden property only works if the Grid is wrapped inside a div
-              isFilteredFeature(feature.name) && (
-                <Grid.Column
-                  key={key}
-                  mobile={8}
-                  tablet={4}
-                  computer={9}
-                  style={{minWidth: '200pt', maxWidth: '200pt'}}
-                >
-                  <Feature
-                    name={feature.name}
-                    // TODO: Change this "|| 0"
-                    licenses_issued={feature.licenses_issued || 0}
-                    licenses_in_use={feature.licenses_in_use || 0}
-                    users={feature.users}
-                    message={feature.message}
-                    //selectFeature={handleSelectFeature}
+          <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
+            <FeatureList features={filter.length > 0 ? filter : product.features} />
+          </Grid.Row>
+        
+          <Divider section />
+
+          {
+            // Header
+            currentFeature !== undefined && (
+              <>
+                <Grid.Row>
+                  <Header dividing size="huge" as="h2">
+                    Users of {currentFeature.name}
+                  </Header>
+                </Grid.Row>
+
+                <Grid.Row>
+                  <Message
+                    warning
+                    hidden={currentFeature.message === undefined}
+                    header="Feature message"
+                    content={currentFeature.message}
                   />
-                </Grid.Column>
-              )
-          )
-        }
-      </Grid.Row>
+                </Grid.Row>
 
-      <Divider section hidden />
-
-      {
-        // Header
-        typeof currentFeature !== 'undefined' && (
-          <Grid.Row>
-            <Header dividing size="huge" as="h2">
-              Users of {currentFeature?.name}
-            </Header>
-          </Grid.Row>
-        )
+                <Grid.Row>
+                  <UsersTable userList={currentFeature.users} />
+                </Grid.Row>
+              </>
+            )
+          }
+        </>
       }
-
-      {
-        // Message
-        typeof currentFeature !== 'undefined' && (
-          <Grid.Row>
-            <Message
-              warning
-              hidden={typeof currentFeature?.message === 'undefined'}
-              header="Feature message"
-              content={currentFeature?.message}
-            />
-          </Grid.Row>
-        )
-      }
-
-      <Grid.Row>
-        <UsersTable userList={currentFeature?.users} />
-      </Grid.Row>
     </Grid>
   );
 }
