@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
 import {
   Grid,
   Header,
@@ -16,8 +15,7 @@ export default function StatusPage() {
   const [product, setProduct] = useState();
   const [filter, setFilter] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
-  const [currentFeature, setCurrentFeature] = useState();
-  const selectedFeature = useSelector(state => state.status.selectedFeature);
+  const [selectedFeature, setSelectedFeature] = useState();
 
   useEffect(() => {
     product &&
@@ -30,16 +28,6 @@ export default function StatusPage() {
       }))
     );
   }, [product]);
-
-  useEffect(() => {
-    if (selectedFeature === undefined)
-      console.log('It is undefined')
-    else {
-      console.log(selectedFeature)
-      product && setCurrentFeature(product.features.find(f => f.name === selectedFeature));
-    }
-  }, [selectedFeature, product]);
-  
 
   let prodcutList = [
     {
@@ -71,12 +59,11 @@ export default function StatusPage() {
 
   const handleProductSelection = (e, {value}) => fetchProduct(value);
 
+  // TODO: Avoid re-rendering all the features by suing memoized stuff
+  const handleFeatureSelection = (featureName) => setSelectedFeature(product.features.find(f => f.name === featureName));
+
   // TODO: Use references instead of creating a new array
   const handleFilterChange = (e, {value}) => setFilter(product.features.filter(f => value.includes(f.name)));
-  
-  // TODO: remove after changing the behavior to use the store
-  //const handleSelectFeature = featureName =>
-  //  setCurrentFeature(product?.features.find(f => f.name === featureName));
 
   return (
     // TODO: Dropdown issue (Seems to be related to semantic-ui)
@@ -115,32 +102,35 @@ export default function StatusPage() {
           </Grid.Row>
 
           <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
-            <FeatureList features={filter.length > 0 ? filter : product.features} />
+            <FeatureList
+              features={filter.length > 0 ? filter : product.features}
+              featureSelectionHandler={handleFeatureSelection}
+            />
           </Grid.Row>
         
           <Divider section />
 
           {
             // Header
-            currentFeature !== undefined && (
+            selectedFeature !== undefined && (
               <>
                 <Grid.Row>
                   <Header dividing size="huge" as="h2">
-                    Users of {currentFeature.name}
+                    Users of {selectedFeature.name}
                   </Header>
                 </Grid.Row>
 
                 <Grid.Row>
                   <Message
                     warning
-                    hidden={currentFeature.message === undefined}
+                    hidden={selectedFeature.message === undefined}
                     header="Feature message"
-                    content={currentFeature.message}
+                    content={selectedFeature.message}
                   />
                 </Grid.Row>
 
                 <Grid.Row>
-                  <UsersTable userList={currentFeature.users} />
+                  <UsersTable userList={selectedFeature.users} />
                 </Grid.Row>
               </>
             )

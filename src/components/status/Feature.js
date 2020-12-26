@@ -1,21 +1,20 @@
 import React from 'react';
-import {useDispatch} from 'react-redux'
 import {Card, Progress, Label} from 'semantic-ui-react';
-import {selectFeature} from '../../actions/status';
 
 export default function Feature({
   name,
   licenses_issued,
   licenses_in_use,
   message,
+  featureSelectionHandler
 }) {
-  const dispatch = useDispatch();
-
   // TODO: All the features are re-rendered when a feature is selected
-
   return (
-    <Card link onClick={() => dispatch(selectFeature(name))}>
-      {message ? <Label color="yellow" corner="right" icon="warning" /> : null}
+    <Card link onClick={() => featureSelectionHandler(name)}>
+      {
+        message && 
+        <Label color="yellow" corner="right" icon="warning" />
+      }
       <Card.Content>
         <Card.Header>
           {/* TODO: The name should be cut if it is to long */}
@@ -38,27 +37,4 @@ export default function Feature({
       </Card.Content>
     </Card>
   );
-
-  /*return (
-    <Segment onClick={() => selectFeature(name)}>
-      {
-      message 
-        ? <Label as='a' color='yellow' ribbon='right' icon='warning'/>
-        : null
-      }
-      
-        {name}
-
-      <Label basic size="large">
-        {licenses_in_use}/{licenses_issued}
-      </Label>
-
-      <Progress
-        total={licenses_issued}
-        value={licenses_in_use}
-        color='blue' 
-        size='tiny'
-      />      
-    </Segment>
-  );*/
 }

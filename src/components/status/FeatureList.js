@@ -2,7 +2,8 @@ import {Grid} from 'semantic-ui-react'
 import Feature from './Feature'
 
 export default function FeatureList({
-  features
+  features,
+  featureSelectionHandler
 }) {
   return (
     // TODO: Check cardgroups
@@ -25,6 +26,7 @@ export default function FeatureList({
               licenses_in_use={feature.licenses_in_use || 0}
               users={feature.users}
               message={feature.message}
+              featureSelectionHandler = {featureSelectionHandler}
             />
           </Grid.Column>
         )
