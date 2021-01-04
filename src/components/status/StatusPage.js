@@ -8,7 +8,12 @@ export default function StatusPage() {
   const [product, setProduct] = useState();
   const [filter, setFilter] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [selectedFeature, setSelectedFeature] = useState();
+
+  useEffect(() => {
+    fetchServers();
+  }, []);
 
   useEffect(() => {
     product &&
@@ -22,33 +27,30 @@ export default function StatusPage() {
       );
   }, [product]);
 
-  let prodcutList = [
-    {
-      key: 'comsol',
-      text: 'Comsol',
-      value: 'comsol',
-    },
-    {
-      key: 'autodesk',
-      text: 'Autodesk',
-      value: 'autodesk2015',
-    },
-    {
-      key: 'mentor',
-      text: 'Mentor',
-      value: 'mentor',
-    },
-  ];
+  const fetchServers = () => {
+    fetch('http://localhost:5000/api/servers')
+      .then(res => res.json())
+      .then(data =>
+        setProductList(
+          data.map(server => ({
+            key: server.name,
+            text: server.name,
+            value: server.name,
+          }))
+        )
+      )
+      .catch(console.log);
+  };
 
   // TODO: Improve this (await)
-  function fetchProduct(productName) {
-    fetch('http://localhost:5000/product/' + productName)
+  const fetchProduct = productName => {
+    fetch('http://localhost:5000/api/product/' + productName)
       .then(res => res.json())
       .then(data => {
         setProduct(data);
       })
       .catch(console.log);
-  }
+  };
 
   const handleProductSelection = (e, {value}) => fetchProduct(value);
 
@@ -72,8 +74,9 @@ export default function StatusPage() {
             placeholder="Select Product"
             search
             selection
-            options={prodcutList}
+            options={productList}
             onChange={handleProductSelection}
+            loading={productList.length === 0}
           />
           <Dropdown
             placeholder="Filter features"
@@ -81,7 +84,6 @@ export default function StatusPage() {
             selection
             multiple
             options={filterOptions}
-            noResultsMessage={null}
             onChange={handleFilterChange}
           />
         </Menu>
