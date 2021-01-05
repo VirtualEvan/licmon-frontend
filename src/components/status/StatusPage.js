@@ -116,18 +116,13 @@ export default function StatusPage() {
                       Users of {selectedFeature.name}
                     </Header>
                   </Grid.Row>
-
+                  {selectedFeature.message && (
+                    <Grid.Row>
+                      <Message warning header="Feature message" content={selectedFeature.message} />
+                    </Grid.Row>
+                  )}
                   <Grid.Row>
-                    <Message
-                      warning
-                      hidden={selectedFeature.message === undefined}
-                      header="Feature message"
-                      content={selectedFeature.message}
-                    />
-                  </Grid.Row>
-
-                  <Grid.Row>
-                    <UsersTable userList={selectedFeature.users} />
+                    <UsersTable userList={selectedFeature.licenses} />
                   </Grid.Row>
                 </>
               )
