@@ -1,0 +1,7 @@
+@import '../../styles/colors.scss';
+
+.progress:global(.ui.progress .bar) {
+  background-color: $blue;
+  height: 0.5em;
+  min-width: 0;
+}

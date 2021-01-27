@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, Progress, Label} from 'semantic-ui-react';
+import styles from './Feature.module.scss';
 
 export default function Feature({
   name,
@@ -26,9 +27,8 @@ export default function Feature({
           <Progress
             total={licenses_issued}
             value={licenses_in_use}
-            color="blue"
             size="tiny"
-            style={{barMinWidth: '0'}}
+            className={styles.progress}
           />
         </Card.Description>
       </Card.Content>
