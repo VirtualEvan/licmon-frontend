@@ -42,13 +42,16 @@ function MultiLicenseRow({
   );
 }
 
+//TODO: Refactor this
 export default function UsersTable({userList = []}) {
   if (userList.length === 0) {
     return null;
   }
 
+  // TODO: Just read it...
   // Check if multiple licenses are granted for this feature
-  const isMultiLicense = 'num_licenses' in userList[0];
+  //const isMultiLicense = 'num_licenses' in userList[0];
+  const isMultiLicense = userList[0]['num_licenses'] !== null;
 
   return (
     <Table striped>

@@ -3,8 +3,14 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
 import App from './components/App';
+import {checkInitialToken, subscribeTokenChanges} from './core/auth';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
+import store from './core/store';
+import client from './core/client';
+
+client.store = store;
+checkInitialToken(store);
+subscribeTokenChanges(store);
 
 ReactDOM.render(
   <Provider store={store}>

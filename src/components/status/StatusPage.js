@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Grid, Header, Dropdown, Message, Menu, Divider} from 'semantic-ui-react';
+import {getServers, getProduct} from '../../services/status';
 
 import FeatureList from './FeatureList';
 import UsersTable from './UsersTable';
@@ -12,6 +13,20 @@ export default function StatusPage() {
   const [selectedFeature, setSelectedFeature] = useState();
 
   useEffect(() => {
+    const fetchServers = () => {
+      getServers()
+        .then(data =>
+          setProductList(
+            data.map(server => ({
+              key: server.name,
+              text: server.name,
+              value: server.name,
+            }))
+          )
+        )
+        .catch(console.log);
+    };
+
     fetchServers();
   }, []);
 
@@ -27,25 +42,9 @@ export default function StatusPage() {
       );
   }, [product]);
 
-  const fetchServers = () => {
-    fetch('http://localhost:5000/api/servers')
-      .then(res => res.json())
-      .then(data =>
-        setProductList(
-          data.map(server => ({
-            key: server.name,
-            text: server.name,
-            value: server.name,
-          }))
-        )
-      )
-      .catch(console.log);
-  };
-
   // TODO: Improve this (await)
   const fetchProduct = productName => {
-    fetch('http://localhost:5000/api/product/' + productName)
-      .then(res => res.json())
+    getProduct(productName)
       .then(data => {
         setProduct(data);
       })

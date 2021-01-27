@@ -5,7 +5,7 @@ import {Grid} from 'semantic-ui-react';
 import './App.css';
 import NavigationMenu from './NavigationMenu';
 import StatusPage from './status/StatusPage';
-import ServicePage from './service/ServicePage';
+import ServicePage from './ServicePage';
 import UsersPage from './users/UsersPage';
 
 function App() {
