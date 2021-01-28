@@ -1,5 +1,6 @@
 import React from 'react';
 import {Table} from 'semantic-ui-react';
+import styles from './UsersTable.module.scss';
 
 function SingleLicenseRow({username, hostname, display, version, server, port, handle, checkout}) {
   return (
@@ -54,7 +55,8 @@ export default function UsersTable({userList = []}) {
   const isMultiLicense = userList[0]['num_licenses'] !== null;
 
   return (
-    <Table striped>
+    // TODO: Use {`${styles['users-table']} attached segment`} if using attached tabs
+    <Table className={styles['users-table']}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Username</Table.HeaderCell>

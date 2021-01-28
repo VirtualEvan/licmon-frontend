@@ -1,0 +1,7 @@
+.users-table {
+  &:global(.ui.table) {
+    // TODO: Use to separate rows, maybe add some colors?
+    border-collapse: separate;
+    //border-spacing: 0 .5em;
+  }
+}

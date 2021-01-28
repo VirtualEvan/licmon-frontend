@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Header, Dropdown, Message, Menu, Divider} from 'semantic-ui-react';
+import {Grid, Header, Dropdown, Message, Menu, Divider, Tab} from 'semantic-ui-react';
 import {getServers, getProduct} from '../../services/status';
+import styles from './StatusPage.module.scss';
 
 import FeatureList from './FeatureList';
 import UsersTable from './UsersTable';
+import Raw from './Raw';
 // TODO: Remove all interrogations
 export default function StatusPage() {
   const [product, setProduct] = useState();
@@ -121,7 +123,20 @@ export default function StatusPage() {
                     </Grid.Row>
                   )}
                   <Grid.Row>
-                    <UsersTable userList={selectedFeature.licenses} />
+                    <Tab
+                      menu={{attached: false, tabular: false}}
+                      className={styles.info}
+                      panes={[
+                        {
+                          menuItem: {key: 'users', icon: 'users', content: 'Users'},
+                          render: () => <UsersTable userList={selectedFeature.licenses} />,
+                        },
+                        {
+                          menuItem: {key: 'raw', icon: 'code', content: 'Raw'},
+                          render: () => <Raw />,
+                        },
+                      ]}
+                    />
                   </Grid.Row>
                 </>
               )
