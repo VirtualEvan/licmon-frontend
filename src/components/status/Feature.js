@@ -11,7 +11,7 @@ export default function Feature({
 }) {
   // TODO: All the features are re-rendered when a feature is selected
   return (
-    <Card link onClick={() => featureSelectionHandler(name)}>
+    <Card link className={styles.feature} onClick={() => featureSelectionHandler(name)}>
       {message && <Label color="yellow" corner="right" icon="warning" />}
       <Card.Content>
         <Card.Header>

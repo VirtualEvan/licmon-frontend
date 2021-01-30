@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Grid, Header, Dropdown, Message, Menu, Divider, Tab} from 'semantic-ui-react';
+import React, {useState, useEffect, Fragment} from 'react';
+import {Grid, Dropdown, Message, Menu, Divider, Tab, TextArea} from 'semantic-ui-react';
 import {getServers, getProduct} from '../../services/status';
 import styles from './StatusPage.module.scss';
 
 import FeatureList from './FeatureList';
 import UsersTable from './UsersTable';
-import Raw from './Raw';
 // TODO: Remove all interrogations
 export default function StatusPage() {
   const [product, setProduct] = useState();
@@ -79,71 +78,72 @@ export default function StatusPage() {
             onChange={handleProductSelection}
             loading={productList.length === 0}
           />
-          <Dropdown
-            placeholder="Filter features"
-            search
-            selection
-            multiple
-            options={filterOptions}
-            onChange={handleFilterChange}
-          />
         </Menu>
       </Grid.Row>
 
-      {
-        // TODO: Create a component to render this??
-        // so it can be checked if product is null in the new component
-        product && (
-          <>
-            <Grid.Row>
-              <Header as="h1">{product.name}</Header>
-            </Grid.Row>
-
-            <Grid.Row style={{overflowX: 'scroll', flexWrap: 'nowrap'}}>
-              <FeatureList
-                features={filter.length > 0 ? filter : product.features}
-                featureSelectionHandler={handleFeatureSelection}
-              />
-            </Grid.Row>
-
-            <Divider section />
-
-            {
-              // Header
-              selectedFeature !== undefined && (
-                <>
-                  <Grid.Row>
-                    <Header dividing size="huge" as="h2">
-                      Users of {selectedFeature.name}
-                    </Header>
-                  </Grid.Row>
-                  {selectedFeature.message && (
-                    <Grid.Row>
-                      <Message warning header="Feature message" content={selectedFeature.message} />
-                    </Grid.Row>
-                  )}
-                  <Grid.Row>
-                    <Tab
-                      menu={{attached: false, tabular: false}}
-                      className={styles.info}
-                      panes={[
-                        {
-                          menuItem: {key: 'users', icon: 'users', content: 'Users'},
-                          render: () => <UsersTable userList={selectedFeature.licenses} />,
-                        },
-                        {
-                          menuItem: {key: 'raw', icon: 'code', content: 'Raw'},
-                          render: () => <Raw />,
-                        },
-                      ]}
+      <Grid.Row>
+        {product && (
+          <Tab
+            //menu={{attached: false, tabular: false}}
+            className={styles.info}
+            panes={[
+              {
+                menuItem: {key: 'features', icon: 'id card outline', content: 'Features'},
+                render: () => (
+                  <Tab.Pane>
+                    <FeatureList
+                      features={filter.length > 0 ? filter : product.features}
+                      featureSelectionHandler={handleFeatureSelection}
                     />
-                  </Grid.Row>
-                </>
-              )
-            }
-          </>
-        )
-      }
+
+                    {
+                      // TODO: Create a component to render this??
+                      // so it can be checked if product is null in the new component
+                      product && selectedFeature !== undefined && (
+                        <>
+                          <Divider></Divider>
+                          {selectedFeature.message && (
+                            <Grid.Row>
+                              <Message
+                                warning
+                                header="Feature message"
+                                content={selectedFeature.message}
+                              />
+                            </Grid.Row>
+                          )}
+                          <Grid.Row>
+                            <UsersTable userList={selectedFeature.licenses} />
+                          </Grid.Row>
+                        </>
+                      )
+                    }
+                  </Tab.Pane>
+                ),
+              },
+              {
+                menuItem: {key: 'raw', icon: 'code', content: 'Raw'},
+                render: () => (
+                  <TextArea rows="20" disabled className={styles.raw} value={product.raw} />
+                ),
+              },
+              {
+                menuItem: (
+                  <Menu.Menu key="filter" position="right" active="false">
+                    <Dropdown
+                      multiple
+                      selection
+                      search
+                      placeholder="Filter features"
+                      options={filterOptions}
+                      onChange={handleFilterChange}
+                    />
+                  </Menu.Menu>
+                ),
+              },
+            ]}
+          />
+        )}
+      </Grid.Row>
     </Grid>
   );
 }

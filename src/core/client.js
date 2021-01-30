@@ -35,7 +35,6 @@ class Client {
     const {headers = {Accept: 'application/json'}, anonymous = false, ...fetchOptions} = options;
     let token = this.token;
     if (!anonymous) {
-      console.log(`Token: ${token}`);
       if (!token) {
         console.log('Cannot send authenticated request without being logged in');
         await this._acquireToken();
@@ -51,7 +50,6 @@ class Client {
     let resp;
     try {
       resp = await fetch(url, {headers, ...fetchOptions});
-      console.log(resp);
     } catch (e) {
       throw new ClientError(url, 0, e);
     }

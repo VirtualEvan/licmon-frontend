@@ -1,5 +1,11 @@
 @import '../../styles/colors.scss';
 
+.feature:global(.ui.link.card) {
+  display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
 .progress:global(.ui.progress .bar) {
   background-color: $blue;
   height: 0.5em;

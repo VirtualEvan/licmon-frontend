@@ -6,10 +6,12 @@ import './App.module.scss';
 import StatusPage from './status/StatusPage';
 import ServicePage from './ServicePage';
 import UsersPage from './users/UsersPage';
+import NavBar from './NavBar';
 
 function App() {
   return (
     <Router>
+      <NavBar />
       <Container>
         <Switch>
           <Route exact path="/" component={StatusPage} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'semantic-ui-react';
+import {Table, Header} from 'semantic-ui-react';
 import styles from './UsersTable.module.scss';
 
 function SingleLicenseRow({username, hostname, display, version, server, port, handle, checkout}) {
@@ -58,6 +58,11 @@ export default function UsersTable({userList = []}) {
     // TODO: Use {`${styles['users-table']} attached segment`} if using attached tabs
     <Table className={styles['users-table']}>
       <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell textAlign="center" colSpan="8">
+            <Header>Test</Header>
+          </Table.HeaderCell>
+        </Table.Row>
         <Table.Row>
           <Table.HeaderCell>Username</Table.HeaderCell>
           <Table.HeaderCell>Hostname</Table.HeaderCell>
