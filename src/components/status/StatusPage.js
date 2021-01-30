@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Dropdown, Message, Menu, Divider, Tab, TextArea} from 'semantic-ui-react';
+import {Grid, Dropdown, Message, Menu, Divider, Tab, TextArea, Header} from 'semantic-ui-react';
 import {getServers, getProduct} from '../../services/status';
 import styles from './StatusPage.module.scss';
 
@@ -69,16 +69,16 @@ export default function StatusPage() {
     // more about using refs safely here:
     <Grid padded>
       <Grid.Row>
-        <Menu>
+        <Header as="h1">
           <Dropdown
-            placeholder="Select Product"
+            placeholder="Select product..."
             search
-            selection
+            selectOnBlur={false}
             options={productList}
             onChange={handleProductSelection}
             loading={productList.length === 0}
           />
-        </Menu>
+        </Header>
       </Grid.Row>
 
       <Grid.Row>
