@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Grid, Dropdown, Message, Menu, Divider, Tab, TextArea} from 'semantic-ui-react';
 import {getServers, getProduct} from '../../services/status';
 import styles from './StatusPage.module.scss';

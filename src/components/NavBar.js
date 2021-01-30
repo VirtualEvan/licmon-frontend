@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Dropdown, Container} from 'semantic-ui-react';
+import {Menu, Container} from 'semantic-ui-react';
 import {useHistory} from 'react-router';
 import styles from './NavBar.module.scss';
 
@@ -20,42 +20,9 @@ export default function NavigationMenu() {
         >
           Licmon
         </Menu.Item>
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            history.push('/service');
-          }}
-        >
-          Service overview
+        <Menu.Item position="right">
+          <UserInfo />
         </Menu.Item>
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            history.push('/users');
-          }}
-        >
-          User management
-        </Menu.Item>
-        <Menu.Item as="a">Home</Menu.Item>
-
-        <Dropdown item simple text="Dropdown">
-          <Dropdown.Menu>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Header Item</Dropdown.Header>
-            <Dropdown.Item>
-              <i className="dropdown icon" />
-              <span className="text">Submenu</span>
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <UserInfo />
       </Container>
     </Menu>
   );
