@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Dropdown, Message, Menu, Divider, Tab, TextArea, Header} from 'semantic-ui-react';
+import {Grid, Dropdown, Message, Menu, Tab, TextArea, Header} from 'semantic-ui-react';
 import {getServers, getProduct} from '../../services/status';
 import styles from './StatusPage.module.scss';
 
 import FeatureList from './FeatureList';
-import UsersTable from './UsersTable';
+import UserTable from './UserTable';
 // TODO: Remove all interrogations
 export default function StatusPage() {
   const [product, setProduct] = useState();
@@ -101,7 +101,6 @@ export default function StatusPage() {
                       // so it can be checked if product is null in the new component
                       product && selectedFeature !== undefined && (
                         <>
-                          <Divider></Divider>
                           {selectedFeature.message && (
                             <Grid.Row>
                               <Message
@@ -112,7 +111,10 @@ export default function StatusPage() {
                             </Grid.Row>
                           )}
                           <Grid.Row>
-                            <UsersTable userList={selectedFeature.licenses} />
+                            <UserTable
+                              featureName={selectedFeature.name}
+                              userList={selectedFeature.licenses}
+                            />
                           </Grid.Row>
                         </>
                       )
