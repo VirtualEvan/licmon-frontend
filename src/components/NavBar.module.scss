@@ -1,3 +1,12 @@
+@import '../styles/colors.scss';
+
 .navbar:global(.ui.menu) {
   border-radius: 0;
+  background: $surface;
+  margin-bottom: 3em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.3), 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    color: $on-surface;
+  }
 }

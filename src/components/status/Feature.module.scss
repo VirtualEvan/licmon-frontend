@@ -4,10 +4,26 @@
   display: inline-block;
   margin-left: 1em;
   margin-right: 1em;
-}
+  background-color: rgba($color: $dark-grey, $alpha: 1);
+  box-shadow: 0 0 2em rgba(0, 0, 0, 0.05), 2px 2px 5px rgba(0, 0, 0, 0.3);
 
-.progress:global(.ui.progress .bar) {
-  background-color: $blue;
-  height: 0.5em;
-  min-width: 0;
+  :global(.header) {
+    color: $white;
+  }
+
+  :global(.meta) {
+    color: $light-grey;
+  }
+
+  :global(.ui.progress) {
+    margin-top: 1.3em;
+    margin-bottom: 0;
+
+    :global(.bar) {
+      background-color: $primary;
+      height: 0.5em;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
 }

@@ -1,5 +1,60 @@
+@import '../../styles/colors.scss';
+
+.product-selector:global(.ui.dropdown) {
+  color: $on-surface;
+
+  :global(.menu) {
+    border-color: $background;
+    background-color: $background;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.3), 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+    :hover {
+      background-color: $primary;
+    }
+  }
+
+  :global(.item) {
+    background-color: $background;
+    background: $background;
+  }
+
+  :global(.text) {
+    color: $on-surface;
+  }
+}
+
+$test: rgba(
+  $color: $charcoal,
+  $alpha: 0,
+);
 .info {
   width: 100%;
+  //background-color: green;
+
+  :global(.ui.menu .active.item) {
+    background-color: $test;
+    border-color: $test;
+    color: $white;
+  }
+
+  :global(.ui.menu .item) {
+    color: $light-grey;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  :global(.ui.tabular) {
+    border-color: $test;
+    //box-shadow: 0 0 2em rgba(0,0,0,.05), 2px 2px 5px rgba(0,0,0,.1);
+  }
+
+  :global(.ui.segment) {
+    background-color: $test;
+    border-color: $test;
+    //box-shadow: 0 0 2em rgba(0,0,0,.05), 2px 2px 5px rgba(0,0,0,.1);
+  }
 }
 
 .raw {
@@ -7,8 +62,6 @@
   width: 100%;
 }
 
-.feature-list {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
+.filter:global(.ui.dropdown) {
+  margin-bottom: 0.2em;
 }

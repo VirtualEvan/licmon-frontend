@@ -1,11 +1,36 @@
-.users-table {
-  &:global(.ui.table) {
-    // TODO: Use to separate rows, maybe add some colors?
-    border-collapse: separate;
-    //border-spacing: 0 .5em;
+@import '../../styles/colors.scss';
+
+.table-menu:global(.menu) {
+  background-color: $surface;
+
+  .table-title {
+    color: $white;
+  }
+
+  .user-filter {
+    padding: 0.5em;
+
+    i {
+      color: $white;
+    }
+
+    input {
+      color: $white;
+      background-color: transparent;
+      border-color: $white;
+    }
   }
 }
 
-.user-filter {
-  padding: 0.5em;
+.users-table:global(.ui.table) {
+  color: $white;
+  // TODO: Use to separate rows, maybe add some colors?
+  border-collapse: separate;
+  //border-spacing: 0 .5em;
+  background-color: rgba($color: #000000, $alpha: 0);
+
+  :global(thead th) {
+    color: $white;
+    background-color: rgba($color: #000000, $alpha: 0);
+  }
 }

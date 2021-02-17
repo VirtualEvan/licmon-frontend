@@ -1,0 +1,11 @@
+@import '../styles/colors.scss';
+
+body {
+  background-color: $background;
+}
+
+:global(.main-container) {
+  background-color: $surface;
+  padding: 1em;
+  box-shadow: 0 0 2em rgba(0, 0, 0, 0.05), 2px 2px 5px rgba(0, 0, 0, 0.1);
+}

@@ -67,9 +67,11 @@ export default function UserTable({featureName, userList = []}) {
     <>
       <Divider />
 
-      <Menu attached="top" borderless>
+      <Menu attached="top" borderless className={styles['table-menu']}>
         <Menu.Item>
-          <Header as="h2">Users of {featureName}</Header>
+          <Header as="h2" className={styles['table-title']}>
+            Users of {featureName}
+          </Header>
         </Menu.Item>
         <Menu.Menu position="right">
           <Search

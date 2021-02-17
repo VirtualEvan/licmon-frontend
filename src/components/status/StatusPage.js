@@ -77,6 +77,7 @@ export default function StatusPage() {
             options={productList}
             onChange={handleProductSelection}
             loading={productList.length === 0}
+            className={styles['product-selector']}
           />
         </Header>
       </Grid.Row>
@@ -138,6 +139,7 @@ export default function StatusPage() {
                       placeholder="Filter features"
                       options={filterOptions}
                       onChange={handleFilterChange}
+                      className={styles.filter}
                     />
                   </Menu.Menu>
                 ),

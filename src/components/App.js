@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <Container>
+      <Container className="main-container">
         <Switch>
           <Route exact path="/" component={StatusPage} />
           <Route exact path="/service" component={ServicePage} />

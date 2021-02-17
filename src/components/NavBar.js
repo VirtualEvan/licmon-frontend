@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Container} from 'semantic-ui-react';
+import {Menu, Container, Header} from 'semantic-ui-react';
 import {useHistory} from 'react-router';
 import styles from './NavBar.module.scss';
 
@@ -9,7 +9,7 @@ export default function NavigationMenu() {
   const history = useHistory();
 
   return (
-    <Menu inverted className={styles.navbar}>
+    <Menu className={styles.navbar}>
       <Container>
         <Menu.Item
           as="a"
@@ -18,7 +18,7 @@ export default function NavigationMenu() {
             history.push('/');
           }}
         >
-          Licmon
+          <Header as="h3">Licmon</Header>
         </Menu.Item>
         <Menu.Item position="right">
           <UserInfo />

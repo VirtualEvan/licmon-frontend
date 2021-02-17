@@ -28,7 +28,7 @@ export default function Feature({
             total={licenses_issued}
             value={licenses_in_use}
             size="tiny"
-            className={styles.progress}
+            className={styles['progress-bar']}
           />
         </Card.Description>
       </Card.Content>
