@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Dropdown, Message, Menu, Tab, TextArea, Header} from 'semantic-ui-react';
-import {getServers, getProduct} from '../../services/status';
+import {Grid, Dropdown, Message, Menu, Tab, TextArea, Header, Button} from 'semantic-ui-react';
+import {getServers, getProduct, requestRelease} from '../../services/status';
 import styles from './StatusPage.module.scss';
 
 import FeatureList from './FeatureList';
@@ -52,6 +52,10 @@ export default function StatusPage() {
       .catch(console.log);
   };
 
+  const handleReleaseRequest = (product_name, feature_name) => {
+    requestRelease(product_name, feature_name).catch(console.log);
+  };
+
   const handleProductSelection = (e, {value}) => fetchProduct(value);
 
   // TODO: Avoid re-rendering all the features by suing memoized stuff
@@ -91,7 +95,7 @@ export default function StatusPage() {
               {
                 menuItem: {key: 'features', icon: 'id card outline', content: 'Features'},
                 render: () => (
-                  <Tab.Pane>
+                  <Tab.Pane className={styles['main-pane']}>
                     <FeatureList
                       features={filter.length > 0 ? filter : product.features}
                       featureSelectionHandler={handleFeatureSelection}
@@ -115,6 +119,17 @@ export default function StatusPage() {
                             <UserTable
                               featureName={selectedFeature.name}
                               userList={selectedFeature.licenses}
+                            />
+                          </Grid.Row>
+                          <Grid.Row className={styles['button-row']}>
+                            <Button
+                              icon="mail"
+                              content="Request license release"
+                              size="big"
+                              className={styles['request-release-button']}
+                              onClick={() =>
+                                handleReleaseRequest(product.name, selectedFeature.name)
+                              }
                             />
                           </Grid.Row>
                         </>

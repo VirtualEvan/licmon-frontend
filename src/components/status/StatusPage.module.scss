@@ -65,3 +65,24 @@ $test: rgba(
 .filter:global(.ui.dropdown) {
   margin-bottom: 0.2em;
 }
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.request-release-button:global(.ui.button) {
+  background-color: $primary;
+  margin-top: 1em;
+  color: $white;
+
+  &:hover {
+    background-color: $secondary;
+  }
+}
+
+.main-pane:global(.ui.segment) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
