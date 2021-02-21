@@ -19,7 +19,7 @@ export function userLogin(token) {
 export function userLogout() {
   return async dispatch => {
     dispatch({type: USER_LOGOUT});
-    window.location.href = 'http://localhost:5000/logout';
+    window.location.href = 'auth/logout';
   };
 }
 

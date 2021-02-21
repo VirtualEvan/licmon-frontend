@@ -14,7 +14,7 @@ export function useAuthentication() {
       popup.current.close();
     }
     popup.current = window.open(
-      'http://localhost:5000/login',
+      'auth/login',
       'login',
       `menubar=no,toolbar=no,location=no,dependent=yes,width=${width},height=${height}`
     );
@@ -33,7 +33,7 @@ export function useAuthentication() {
         return;
       }
       // TODO: Remove this hardcoded stuff
-      if (evt.origin !== 'http://localhost:5000') {
+      if (evt.origin !== window.location.origin) {
         // we should never get messages from different origins, so those are ignored too
         console.error(
           `Unexpected message origin: expected ${window.location.origin}, got ${evt.origin}`
