@@ -1,5 +1,5 @@
-// error
-export const getErrors = state => state.error;
+// notifications
+export const getNotifications = state => state.notification;
 
 // auth
 export const getToken = state => state.auth.token;

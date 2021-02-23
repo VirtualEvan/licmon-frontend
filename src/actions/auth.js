@@ -31,10 +31,6 @@ export function tokenNeeded() {
   return {type: TOKEN_NEEDED};
 }
 
-export function addError(error) {
-  return {type: ADD_ERROR, error};
-}
-
 export function loginWindowOpened() {
   return {type: LOGIN_WINDOW_OPENED};
 }

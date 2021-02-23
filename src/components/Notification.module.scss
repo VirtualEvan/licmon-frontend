@@ -1,0 +1,12 @@
+.notification:global(.ui.message) {
+  max-width: 33em;
+  min-width: 15em;
+  position: absolute;
+  right: 50px;
+  top: 5%;
+  z-index: 9999;
+
+  :global(.content) {
+    margin-right: 1em;
+  }
+}

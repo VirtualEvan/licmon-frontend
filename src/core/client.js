@@ -1,5 +1,6 @@
 import {getToken, isAcquiringToken} from './selectors';
-import {tokenExpired, tokenNeeded, addError} from '../actions/auth';
+import {tokenExpired, tokenNeeded} from '../actions/auth';
+import {addErrorNotification} from '../actions/notification';
 
 class ClientError extends Error {
   constructor(url, code, message, data = null) {
@@ -19,7 +20,7 @@ class Client {
     try {
       return await promise;
     } catch (err) {
-      this.store.dispatch(addError(err.toString()));
+      this.store.dispatch(addErrorNotification(err.toString()));
       return undefined;
     }
   }
