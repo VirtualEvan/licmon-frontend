@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Grid, Dropdown, Message, Menu, Tab, TextArea, Header, Button} from 'semantic-ui-react';
 import {getServers, getProduct, requestRelease} from '../../services/status';
 import styles from './StatusPage.module.scss';
+import client from '../../core/client'
 
 import FeatureList from './FeatureList';
 import UserTable from './UserTable';
@@ -12,6 +13,7 @@ export default function StatusPage() {
   const [filterOptions, setFilterOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [selectedFeature, setSelectedFeature] = useState();
+  const [_requestRelease, requestingRelease] = client.useBackendLazy(requestRelease);
 
   useEffect(() => {
     const fetchServers = () => {
@@ -50,10 +52,6 @@ export default function StatusPage() {
         setProduct(data);
       })
       .catch(console.log);
-  };
-
-  const handleReleaseRequest = (product_name, feature_name) => {
-    requestRelease(product_name, feature_name).catch(console.log);
   };
 
   const handleProductSelection = (e, {value}) => fetchProduct(value);
@@ -127,9 +125,9 @@ export default function StatusPage() {
                               content="Request license release"
                               size="big"
                               className={styles['request-release-button']}
-                              onClick={() =>
-                                handleReleaseRequest(product.name, selectedFeature.name)
-                              }
+                              onClick={() => _requestRelease(product.name, selectedFeature.name)}
+                              loading={requestingRelease}
+                              disabled={requestingRelease}
                             />
                           </Grid.Row>
                         </>

@@ -1,6 +1,20 @@
+import {useReducer, useEffect} from 'react';
 import {getToken, isAcquiringToken} from './selectors';
 import {tokenExpired, tokenNeeded} from '../actions/auth';
 import {addErrorNotification} from '../actions/notification';
+
+function backendReducer(state, action) {
+  switch (action.type) {
+    case 'submit':
+      return {...state, submitting: true, error: '', result: null};
+    case 'error':
+      return {...state, submitting: false, error: action.error};
+    case 'success':
+      return {...state, submitting: false, result: action.result};
+    default:
+      return state;
+  }
+}
 
 class ClientError extends Error {
   constructor(url, code, message, data = null) {
@@ -30,6 +44,65 @@ class Client {
       throw new Error('Tried to use client that is not connected to a store');
     }
     return getToken(this.store.getState());
+  }
+
+  /**
+   * This method returns a React hook which handles the possible states regarding backend
+   * communication. 
+   *
+   * @param {Function} funcs - the client function which will be invoked.
+   */
+  useBackendLazy(func) {
+    const [state, dispatch] = useReducer(backendReducer, {
+      submitting: false,
+      error: '',
+      result: null,
+    });
+
+    const call = async (...params) => {
+      dispatch({type: 'submit'});
+      try {
+        const result = await func.bind(this)(...params);
+        dispatch({type: 'success', result});
+        return result;
+      } catch (err) {
+        dispatch({type: 'error', error: err.toString()});
+        this.store.dispatch(addErrorNotification(err.message));
+      }
+    };
+
+    return [call, state.submitting, state.error, state.result];
+  }
+
+  /**
+   * `useBackendLazy` works fine for methods that are invoked manually (e.g. clicking a button) but may cause problems
+   * when used in conjunction with `useEffect` which relies on the identity of its dependencies. `useBackend` solves
+   * this problem by calling the passed `func` immediatelly and returning relevant data.
+   *
+   * @param {Function} func - function that will be called every time `deps` change.
+   * @param {Array} deps - dependencies passed to the `useEffect`.
+   */
+  useBackend(func, deps=[]) {
+    const [state, dispatch] = useReducer(backendReducer, {
+      submitting: false,
+      error: '',
+      result: null,
+    });
+
+    useEffect(() => {
+      (async () => {
+        try {
+          const result = await func();
+          dispatch({type: 'success', result});
+        } catch (err) {
+          dispatch({type: 'error', error: err.toString()});
+          this.store.dispatch(addErrorNotification(err.message));
+        }
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, deps);
+
+    return [state.result, state.submitting, state.error];
   }
 
   async request(url, options = {}, isRetry = false) {
