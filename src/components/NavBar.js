@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Container, Header} from 'semantic-ui-react';
+import {Menu, Container, Header, Checkbox} from 'semantic-ui-react';
 import {useHistory} from 'react-router';
 import styles from './NavBar.module.scss';
 
@@ -20,9 +20,15 @@ export default function NavigationMenu() {
         >
           <Header as="h3">Licmon</Header>
         </Menu.Item>
-        <Menu.Item position="right">
-          <UserInfo />
-        </Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Checkbox slider fitted />
+          </Menu.Item>
+          <Menu.Item>
+            <UserInfo />
+          </Menu.Item>
+        </Menu.Menu>
+        
       </Container>
     </Menu>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUserRoles } from '../../core/selectors';
+import { adminView } from '../../core/selectors';
 
 export default function AdminRequired({component: Component, ...props}) {
-  const userRoles = useSelector(getUserRoles);
+  const showAdminView = useSelector(adminView);
 
-  if(!userRoles.includes('licmon-admins')) {
+  if(!showAdminView) {
     return null
   }
 

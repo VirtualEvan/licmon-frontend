@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getToken, getUserInfo} from '../../core/selectors';
-import {loadUser} from '../../actions/user';
+import {loadUser} from '../../actions/auth';
 import {useAuthentication} from '../../core/auth';
 
 export default function UsersPage() {

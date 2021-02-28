@@ -8,6 +8,7 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
 } from '../actions/auth';
+import {USER_RECEIVED, SET_ADMIN_VIEW} from '../actions/auth';
 
 export default combineReducers({
   token: (state = null, action) => {
@@ -40,6 +41,25 @@ export default combineReducers({
       case LOGIN_WINDOW_CLOSED:
       case USER_LOGIN:
         return false;
+      default:
+        return state;
+    }
+  },
+  user: (state = null, action) => {
+    switch (action.type) {
+      case USER_LOGOUT:
+        return null;
+      case USER_RECEIVED:
+        return action.user;
+      default:
+        return state;
+    }
+  },
+
+  adminView: (state = false, action) => {
+    switch (action.type) {
+      case SET_ADMIN_VIEW:
+        return action.adminView;
       default:
         return state;
     }
