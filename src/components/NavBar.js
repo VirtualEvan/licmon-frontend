@@ -1,9 +1,10 @@
 import React from 'react';
-import {Menu, Container, Header, Checkbox} from 'semantic-ui-react';
+import {Menu, Container, Header} from 'semantic-ui-react';
 import {useHistory} from 'react-router';
 import styles from './NavBar.module.scss';
 
 import UserInfo from './users/UserInfo';
+import ViewSwitcher from './users/ViewSwitcher'
 
 export default function NavigationMenu() {
   const history = useHistory();
@@ -22,7 +23,7 @@ export default function NavigationMenu() {
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
-            <Checkbox slider fitted />
+            <ViewSwitcher />
           </Menu.Item>
           <Menu.Item>
             <UserInfo />

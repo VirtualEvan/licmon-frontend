@@ -57,3 +57,7 @@ export function loadUser() {
     return user;
   };
 }
+
+export function switchAdminView(adminView) {
+  return {type: SET_ADMIN_VIEW, adminView}
+}

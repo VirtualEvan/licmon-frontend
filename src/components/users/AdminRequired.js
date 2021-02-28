@@ -1,12 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
-import { adminView } from '../../core/selectors';
+import { isAdminViewEnabled } from '../../core/selectors';
 
 export default function AdminRequired({component: Component, ...props}) {
-  const showAdminView = useSelector(adminView);
+  const adminViewEnabled = useSelector(isAdminViewEnabled);
 
-  if(!showAdminView) {
+  if(!adminViewEnabled) {
     return null
   }
 
