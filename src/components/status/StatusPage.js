@@ -124,9 +124,21 @@ export default function StatusPage() {
                 ),
               },
               {
-                menuItem: {key: 'raw', icon: 'code', content: 'Raw'},
+                menuItem: (
+                  <AdminRequired
+                    component={Menu.Item}
+                    key='raw'
+                    icon='code'
+                    content='Raw' />
+                ),
                 render: () => (
-                  <TextArea rows="20" disabled className={styles.raw} value={product.raw} />
+                  <AdminRequired
+                    component={TextArea}
+                    rows="50"
+                    disabled
+                    className={styles.raw}
+                    value={product.raw}
+                  />
                 ),
               },
               {
