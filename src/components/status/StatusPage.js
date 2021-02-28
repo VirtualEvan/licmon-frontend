@@ -10,53 +10,37 @@ import AdminRequired from '../users/AdminRequired';
 
 // TODO: Remove all interrogations
 export default function StatusPage() {
-  const [product, setProduct] = useState();
   const [filter, setFilter] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [selectedFeature, setSelectedFeature] = useState();
+  const [servers, loadingServers] = client.useBackend(getServers);
+  const [_getProduct, loadingProduct, , product] = client.useBackendLazy(getProduct);
   const [sendReleaseRequest, sendingReleaseRequest] = client.useBackendLazy(requestRelease);
-
   useEffect(() => {
-    const fetchServers = () => {
-      getServers()
-        .then(data =>
-          setProductList(
-            data.map(server => ({
-              key: server.name,
-              text: server.name,
-              value: server.name,
-            }))
-          )
-        )
-        .catch(console.log);
-    };
-
-    fetchServers();
-  }, []);
+    servers &&
+    setProductList(
+      servers.map(server => ({
+        key: server.name,
+        text: server.name,
+        value: server.name,
+      }))
+    )
+  }, [servers]);
 
   useEffect(() => {
     product &&
-      // TODO: the features array is being iterated twice (here and in the return)
-      setFilterOptions(
-        product.features.map((feature, key) => ({
-          key: key,
-          text: feature.name,
-          value: feature.name,
-        }))
-      );
+    // TODO: the features array is being iterated twice (here and in the return)
+    setFilterOptions(
+      product.features.map((feature, key) => ({
+        key: key,
+        text: feature.name,
+        value: feature.name,
+      }))
+    );
   }, [product]);
 
-  // TODO: Improve this (await)
-  const fetchProduct = productName => {
-    getProduct(productName)
-      .then(data => {
-        setProduct(data);
-      })
-      .catch(console.log);
-  };
-
-  const handleProductSelection = (e, {value}) => fetchProduct(value);
+  const handleProductSelection = (e, {value}) => _getProduct(value);
 
   // TODO: Avoid re-rendering all the features by suing memoized stuff
   const handleFeatureSelection = featureName =>
@@ -80,7 +64,7 @@ export default function StatusPage() {
             selectOnBlur={false}
             options={productList}
             onChange={handleProductSelection}
-            loading={productList.length === 0}
+            loading={loadingServers}
             className={styles['product-selector']}
           />
         </Header>
