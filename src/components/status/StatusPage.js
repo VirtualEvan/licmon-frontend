@@ -6,6 +6,8 @@ import client from '../../core/client'
 
 import FeatureList from './FeatureList';
 import UserTable from './UserTable';
+import AdminRequired from '../users/AdminRequired';
+
 // TODO: Remove all interrogations
 export default function StatusPage() {
   const [product, setProduct] = useState();
@@ -13,7 +15,7 @@ export default function StatusPage() {
   const [filterOptions, setFilterOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [selectedFeature, setSelectedFeature] = useState();
-  const [_requestRelease, requestingRelease] = client.useBackendLazy(requestRelease);
+  const [sendReleaseRequest, sendingReleaseRequest] = client.useBackendLazy(requestRelease);
 
   useEffect(() => {
     const fetchServers = () => {
@@ -114,7 +116,8 @@ export default function StatusPage() {
                             </Grid.Row>
                           )}
                           <Grid.Row>
-                            <UserTable
+                            <AdminRequired
+                              component={UserTable}
                               featureName={selectedFeature.name}
                               userList={selectedFeature.licenses}
                             />
@@ -125,9 +128,9 @@ export default function StatusPage() {
                               content="Request license release"
                               size="big"
                               className={styles['request-release-button']}
-                              onClick={() => _requestRelease(product.name, selectedFeature.name)}
-                              loading={requestingRelease}
-                              disabled={requestingRelease}
+                              onClick={() => sendReleaseRequest(product.name, selectedFeature.name)}
+                              loading={sendingReleaseRequest}
+                              disabled={sendingReleaseRequest}
                             />
                           </Grid.Row>
                         </>

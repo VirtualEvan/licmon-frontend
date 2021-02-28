@@ -9,3 +9,4 @@ export const isAcquiringToken = state => !!state.auth.acquiringToken;
 
 // user
 export const getUserInfo = state => state.user;
+export const getUserRoles = state => state.user.roles;
